@@ -1,0 +1,30 @@
+# Build artifacts
+build/
+*.o
+*.elf
+*.iso
+*.map
+*.debug
+
+# Editor files
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+output.txt
+
+# Cross-compiler artifacts
+*.a
+*.so
+
+# QEMU files
+*.qcow2
+*.img

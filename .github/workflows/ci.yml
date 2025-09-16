@@ -1,0 +1,57 @@
+name: Brandon Media OS CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-multilib nasm xorriso grub-pc-bin grub-common qemu-system-x86
+
+      - name: Install x86_64-elf cross-compiler
+        run: |
+          wget https://github.com/lordmilko/i686-elf-tools/releases/download/7.1.0/x86_64-elf-tools-linux.zip
+          unzip x86_64-elf-tools-linux.zip
+          sudo mv x86_64-elf-tools /opt/
+          echo "/opt/x86_64-elf-tools/bin" >> $GITHUB_PATH
+
+      - name: Create build directories
+        run: |
+          mkdir -p build/obj build/iso build/debug config
+
+      - name: Build kernel
+        run: make all
+
+      - name: Create ISO
+        run: make iso
+
+      - name: Test boot in QEMU
+        run: |
+          timeout 10s qemu-system-x86_64 -cdrom build/os.iso -serial stdio -display none > test_output.txt 2>&1 || true
+          grep -q "Brandon Media OS" test_output.txt && echo "BOOT TEST: PASSED" || (echo "BOOT TEST: FAILED" && cat test_output.txt && exit 1)
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: brandon-media-os
+          path: |
+            build/kernel.elf
+            build/os.iso
+
+      - name: Upload test output
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: test-output
+          path: test_output.txt
