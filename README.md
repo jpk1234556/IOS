@@ -412,8 +412,15 @@ Brandon Media OS represents the future of operating system interfaces - where pr
 
 ---
 
+# IOS
+OPERATING SYSTEM
+>>>>>>> 625b8a723dc9b1c7f461c6fb199fda5e55f479e7
 *"Neural interfaces active. Matrix protocols engaged. The future is now."*
 
 ![Neural Matrix Active](https://img.shields.io/badge/Neural%20Matrix-Active-00ff00?style=for-the-badge)
 ![System Status](https://img.shields.io/badge/System-Online-0080ff?style=for-the-badge)
 ![Ready](https://img.shields.io/badge/Ready-For%20Future-00ffff?style=for-the-badge)
+=======
+# IOS
+OPERATING SYSTEM
+>>>>>>> 625b8a723dc9b1c7f461c6fb199fda5e55f479e7
